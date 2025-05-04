@@ -174,3 +174,4 @@ cython_debug/
 .pypirc
 *.jpg
 *.keras
+!saint bernard256.jpg
