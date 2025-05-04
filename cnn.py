@@ -90,7 +90,7 @@ print(f"Val accuracy is : {accuracy} - Val loss is : {loss}")
 
 
 
-#if model already exists and you want to use it to predict something, uncomment code below
+    #if model already exists and you want to use it to predict something, uncomment code below
 # img_path = "./DogDetector/labrador.jpg"
 # img = image.load_img(img_path, target_size=(256,256))
 # img_array = image.img_to_array(img)
