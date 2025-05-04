@@ -31,7 +31,7 @@ This project is a complete image classification pipeline built to detect whether
 
 - Python 3.8+
 - TensorFlow 2.x
-- Pillow
+- matplotlib
 - duckduckgo-search
 
 ### Install Dependencies
