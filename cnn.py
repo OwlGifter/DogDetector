@@ -1,8 +1,10 @@
 import os
+import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing import image
 import matplotlib.pyplot as plt
 from keras.models import load_model
 
@@ -82,10 +84,22 @@ else:
     plt.show()
 
 
-
-#if model already exists and you want to use it to predict something, uncomment line below
-#prediction = model.predict(input image address)
-
 #checks excaluation and prediction
 loss, accuracy = model.evaluate(val_gen)
 print(f"Val accuracy is : {accuracy} - Val loss is : {loss}")
+
+
+
+#if model already exists and you want to use it to predict something, uncomment code below
+# img_path = "./DogDetector/labrador.jpg"
+# img = image.load_img(img_path, target_size=(256,256))
+# img_array = image.img_to_array(img)
+# img_array = img_array/255.0
+# img_array = np.expand_dims(img_array, axis=0)
+# prediction = model.predict(img_array)
+# print("▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲")
+# if prediction[0][0] > .5:
+#     print("image prediction: Dog!")
+# else:
+#     print("image prediction: No Dog!")
+# print("▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼")
