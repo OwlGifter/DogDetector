@@ -21,6 +21,8 @@ val_dir = "./DogDetector/dataset/val"
 train_datagen = ImageDataGenerator(rescale=1./255)
 val_datagen = ImageDataGenerator(rescale=1./255)
 
+#due to folder set up, class 0 = dog, class 1 = nodog
+#this means that when an image is classified as 0 there is a dog in the image.
 train_gen = train_datagen.flow_from_directory(
     train_dir,
     target_size=IMG_SIZE,
@@ -50,11 +52,13 @@ else:
         Conv2D(64, (3,3), activation='relu'),
         MaxPooling2D(2,2),
 
+        #model seems to be overfitting, so im removing a layer
         Conv2D(128, (3,3), activation='relu'),
         MaxPooling2D(2,2),
 
         Flatten(),
-        Dense(128, activation='relu'),
+        #model seems to be overfitting, so im lowering dense number from 128 to 64
+        Dense(64, activation='relu'),
         Dropout(0.5),
         Dense(1, activation='sigmoid')  # Binary classification
     ])
@@ -85,21 +89,24 @@ else:
 
 
 #checks excaluation and prediction
-loss, accuracy = model.evaluate(val_gen)
-print(f"Val accuracy is : {accuracy} - Val loss is : {loss}")
+# loss, accuracy = model.evaluate(val_gen)
+# print(f"Val accuracy is : {accuracy} - Val loss is : {loss}")
 
 
 
-    #if model already exists and you want to use it to predict something, uncomment code below
-# img_path = "./DogDetector/labrador.jpg"
-# img = image.load_img(img_path, target_size=(256,256))
-# img_array = image.img_to_array(img)
-# img_array = img_array/255.0
-# img_array = np.expand_dims(img_array, axis=0)
-# prediction = model.predict(img_array)
-# print("▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲")
-# if prediction[0][0] > .5:
-#     print("image prediction: Dog!")
-# else:
-#     print("image prediction: No Dog!")
-# print("▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼")
+#if model already exists and you want to use it to predict something, uncomment code below
+img_path = "./DogDetector/labrador.jpg"
+img = image.load_img(img_path, target_size=(256,256))
+img_array = image.img_to_array(img)
+img_array = img_array/255.0
+img_array = np.expand_dims(img_array, axis=0)
+prediction = model.predict(img_array)
+print("▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲")
+print(prediction)
+#dog = 0, nodog = 1
+if prediction[0][0] <= .5:
+    print("image prediction: Dog!")
+else:
+    print("image prediction: No Dog!")
+print("▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼")
+print(train_gen.class_indices) #dog = 0, nodog = 1
